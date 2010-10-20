@@ -11,15 +11,15 @@ class Reflexa() {
     /*
      * reflexa apiへアクセス
      */
-    def getXMLSource(query: String): Elem = {
+    def getXMLSource(query: String) = {
         val src = Source.fromURL(url + "?q=" + query + "&format=xml")
-        return XML.loadString(src.mkString)
+        XML.loadString(src.mkString)
     }
 
     /*
      * 検索結果のxmlをパースし、結果の配列を作成
      */
-    def makeWordList(query: String): Array[String] = {
+    def makeWordList(query: String) = {
         val xml = getXMLSource(query)
         val words = xml \\ "word"
         words size match {
@@ -32,13 +32,13 @@ class Reflexa() {
      * 検索文字列からqueryを作成
      * 文字列同士は「%20」で連結
      */
-    def makeQuery(search_words: Array[String]): String = {
-        return search_words.map(URLEncoder.encode).mkString("%20")
+    def makeQuery(search_words: Array[String]) = {
+        search_words.map(URLEncoder.encode).mkString("%20")
     }
     
-    def search(search_words: Array[String]): Array[String] = {
+    def search(search_words: Array[String]) = {
         val query = makeQuery(search_words)
-        return makeWordList(query)
+        makeWordList(query)
     }
 }
 
